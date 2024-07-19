@@ -1,17 +1,17 @@
-// import React from 'react'
-
-// import { useState } from "react";
-import { useState } from "react";
 import { contentProps } from "./Type";
 import { FaRegCheckCircle, FaRegCircle } from "react-icons/fa";
 import { RiDeleteBin6Line } from "react-icons/ri";
 // import Select from "./constant/Select";
 
-function Content({ showItem, onDelete }: contentProps) {
-  const [Icon, setIcon] = useState<{ [key: number]: boolean }>({});
-
+function Content({
+  showItem,
+  onDelete,
+  iconTextStatus,
+  setIconTextStatus,
+  bgThemes,
+}: contentProps) {
   const handleIconChange = (id: number) => {
-    setIcon((prevState) => ({
+    setIconTextStatus((prevState) => ({
       ...prevState,
       [id]: !prevState[id],
     }));
@@ -26,24 +26,20 @@ function Content({ showItem, onDelete }: contentProps) {
               <ul>
                 {showItem.map((item) => (
                   <div className="container pb-10">
-                    <div className="flex flex-row bg-[#262626] rounded-md p-7 border-[#333333] border ">
-                      <div className="left-full mr-5">({item.id})</div>
+                    <div
+                      className="flex flex-row bg-[#262626] rounded-md p-7 border-[#333333] border"
+                      style={{
+                        backgroundColor: bgThemes.bgColor,
+                      }}>
+                      {/* <div className="left-full mr-5">({item.id})</div> */}
                       <div>
                         <button onClick={() => handleIconChange(item.id)}>
-                          {Icon[item.id] !== undefined ? (
-                            Icon[item.id] ? (
-                              <FaRegCircle
-                                className="mr-4 left-full"
-                                size={25}
-                                color="#4EA8DE"
-                              />
-                            ) : (
-                              <FaRegCheckCircle
-                                className="mr-4 left-full"
-                                size={25}
-                                color="#8284FA"
-                              />
-                            )
+                          {iconTextStatus[item.id] ? (
+                            <FaRegCheckCircle
+                              className="mr-4 left-full"
+                              size={25}
+                              color="#8284FA"
+                            />
                           ) : (
                             <FaRegCircle
                               className="mr-4 left-full"
@@ -57,7 +53,17 @@ function Content({ showItem, onDelete }: contentProps) {
                         className="flex flex-col w-full text-[#F2F2F2] "
                         key={item.id}
                         value={item.id}>
-                        {item.text}
+                        {iconTextStatus[item.id] ? (
+                          <del className="text-md text-[#808080] font-sans font-bold">
+                            {item.text}
+                          </del>
+                        ) : (
+                          <p
+                            className=" text-[#F2F2F2] font-sans font-bold"
+                            style={{ color: bgThemes.textColor }}>
+                            {item.text}
+                          </p>
+                        )}
                       </li>
                       <button onClick={() => onDelete(item.id)}>
                         <RiDeleteBin6Line

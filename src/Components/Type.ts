@@ -6,12 +6,17 @@ export interface dropdownType {
 export type bodyProps = {
   ShowItem: todoArray[];
   onDelete: (idToDelete: number) => void;
+  bgThemes: theme;
 };
 
 export type contentProps = {
   showItem: todoArray[];
-
   onDelete: (idToDelete: number) => void;
+  iconTextStatus: { [key: number]: boolean };
+  setIconTextStatus: React.Dispatch<
+    React.SetStateAction<{ [key: number]: boolean }>
+  >;
+  bgThemes: theme;
 };
 
 export type searchInputProp = {
@@ -77,4 +82,11 @@ export type inputModalPropsType = {
   closeModal: () => void;
   openModal?: () => void;
   setIsOpen?: React.Dispatch<React.SetStateAction<boolean>>;
+  bgThemes: theme;
+};
+
+export type theme = {
+  bgColor: string;
+  textColor: string;
+  containerColor: string;
 };
